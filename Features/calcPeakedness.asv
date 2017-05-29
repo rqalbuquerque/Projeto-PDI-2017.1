@@ -1,0 +1,14 @@
+%% Função que calcula a medida de Peakedness
+%Entrada:
+% mat   - região de uma imagem (patch)
+%Saída:
+% peak  - valor de Peakedness
+
+%%
+function peak = calcPeakedness(mat)
+    
+    [Bx,By] = gradient(mat);
+    array_Bx = 
+    peak = min(log(kurtosis(Bx)), log(By));
+    
+end
