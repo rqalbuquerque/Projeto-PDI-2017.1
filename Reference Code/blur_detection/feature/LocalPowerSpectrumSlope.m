@@ -30,7 +30,7 @@ parfor i = 1:size(im_col,2)
     lsf_new = rearrange(lC_log, lC_log_new, lsf);
     lsf_new = log(lsf_new(1:end-1));
     idx = ~(isnan(lsf_new) + isinf(lsf_new));   
-    alf_local = sum(lsf_new(idx))
+    alf_local = sum(lsf_new(idx));
     q(i) = alf_local;
 end
 q = reshape(q, [im_height-patchsize+1, im_width-patchsize+1]);

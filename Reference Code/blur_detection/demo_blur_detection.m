@@ -13,12 +13,12 @@
 clear;
 
 % Change the following parallel computing setting according to your environment.
-matlabpool open 4;
+%matlabpool open 2;
 
 addpath('feature');
 addpath('UGM');
 
-im_path = 'image\out_of_focus0015.jpg';
+im_path = 'image\out_of_focus0015_cortada.jpg';
 im = rgb2gray(im2double(imread(im_path)));
 
 final_map = blurDetection(im);
