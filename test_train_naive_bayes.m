@@ -1,29 +1,43 @@
+clc; clear;
+
 %% Load and get files to train naive bayes
 path = 'Data Base\trainNB';
 or = [path '\images'];
 gt = [path '\gt'];
 load('learned_linear_filter.mat');
 
-orfiles = dir( [or '\*.png'] );
-orfiles = strvcat( orfiles.name );
+orfiles = dir( [or '\*.jpg'] );
+orfiles = char( orfiles.name );
 
 gtfiles = dir( [gt '\*.png'] );
-gtfiles = strvcat( gtfiles.name );
+gtfiles = char( gtfiles.name );
 
-data = {};
+nFiles = size(orfiles,1);
+data_train = {};
 pSize = 11;
 lines = 1;
-for i=1:size(orfiles,2)
-    orIm = imread(orfiles(i,:));
-    gtIm = imread(gtfiles(i,:));
+offset = (pSize - 1)/2;
+for i=1:nFiles
+    orIm = imread([or '\' orfiles(i,:)]);
+    gtIm = imread([gt '\' gtfiles(i,:)]);
     
-    q1 = calcPeakedness(im, patchsize);
-    q2 = calcSpectrumSlope(im, patchsize);
+    im = rgb2gray(orIm);
+    
+    q1 = calcPeakedness(im, pSize);
+    q2 = calcSpectrumSlope(im, pSize);
     q3 = LocalLearnedFilter(im, W_11(:,1:5));  
     
-    for j=1:size(gtIm_col,2)
-        data{lines,1} = ;
-        lines = lines+1;
+    [im_height, im_width] = size(orIm);
+    
+    for j=1+pSize:im_height-pSize
+        for k=1+pSize:im_width-pSize
+            data_train{i,1} = {[q1(j,k) q2(j,k) q3{1,1}(j,k) q3{2,1}(j,k)] gtIm(j,k)};
+        end
     end
     
 end
+
+save data_to_train_rqa
+
+
+    

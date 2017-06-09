@@ -4,7 +4,7 @@ function q = calcPeakedness(im, pSize)
     offset = (pSize - 1)/2;
 
     % gradiente
-    [dx, dy] = gradient(im);
+    [dx, dy] = gradient(uint8(im));
 
     % patches e normalização utilizada no projeto original
     dx_col = im2col(dx, [pSize, pSize]);
